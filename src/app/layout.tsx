@@ -1,26 +1,26 @@
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { getAuthSession } from "@/lib/nextauth"
-import AuthProvider from "@/components/providers/AuthProvider"
-import TrpcProvider from "@/components/providers/TrpcProvider"
-import ToastProvider from "@/components/providers/ToastProvider"
-import Navigation from "@/components/auth/Navigation"
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { getAuthSession } from "@/lib/nextauth";
+import AuthProvider from "@/components/providers/AuthProvider";
+import TrpcProvider from "@/components/providers/TrpcProvider";
+import ToastProvider from "@/components/providers/ToastProvider";
+import Navigation from "@/components/auth/Navigation";
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "T3Stack入門",
   description: "T3Stack入門",
-}
+};
 
 interface RootLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const RootLayout = async ({ children }: RootLayoutProps) => {
   // 認証情報取得
-  const user = await getAuthSession()
+  const user = await getAuthSession();
 
   return (
     <html lang="ja">
@@ -46,7 +46,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
         </div>
       </body>
     </html>
-  )
-}
+  );
+};
 
-export default RootLayout
+export default RootLayout;

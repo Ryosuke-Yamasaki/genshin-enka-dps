@@ -48,6 +48,8 @@ model User {
   accounts           Account[]
   sessions           Session[]
   PasswordResetToken PasswordResetToken[]
+  targets            Targets[]
+  artifact_managers  ArtifactManagers[]
 }
 
 model PasswordResetToken {
@@ -65,4 +67,63 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Targets {
+  id                       String   @id @default(cuid())
+  userId                   String   @map("user_id")
+  name                     String?  @db.VarChar(100)
+  characterId              Int      @map("character_id")
+  characterLevelId         Int      @map("character_level_id")
+  normalAttackLevel        Int      @map("normal_attack_level")
+  elementalSkillLevel      Int      @map("elemental_skill_level")
+  elementalBurstLevel      Int      @map("elemental_burst_level")
+  constellationRank        Int      @map("constellation_rank")
+  weaponId                 Int      @map("weapon_id")
+  weaponLevelId            Int      @map("weapon_level_id")
+  refinementRank           Int      @map("refinement_rank")
+  flowerArtifactManagerId  String?  @map("flower_artifact_manager_id")
+  plumeArtifactManagerId   String?  @map("plume_artifact_manager_id")
+  sandsArtifactManagerId   String?  @map("sands_artifact_manager_id")
+  gobletArtifactManagerId  String?  @map("goblet_artifact_manager_id")
+  circletArtifactManagerId String?  @map("circlet_artifact_manager_id")
+  character1Buff           Int?     @map("character1_buff")
+  character2Buff           Int?     @map("character2_buff")
+  character3Buff           Int?     @map("character3_buff")
+  weapon1Buff              Int?     @map("weapon1_buff")
+  weapon2Buff              Int?     @map("weapon2_buff")
+  weapon3Buff              Int?     @map("weapon3_buff")
+  artifact1Buff            Int?     @map("artifact1_buff")
+  artifact2Buff            Int?     @map("artifact2_buff")
+  artifact3Buff            Int?     @map("artifact3_buff")
+  elementalResonance1Buff  Int?     @map("elemental_resonance1_buff")
+  elementalResonance2Buff  Int?     @map("elemental_resonance2_buff")
+  createdAt                DateTime @default(now()) @map("created_at")
+  updatedAt                DateTime @default(now()) @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("targets")
+}
+
+model ArtifactManagers {
+  id             String   @id @default(cuid())
+  userId         String   @map("user_id")
+  name           String?  @db.VarChar(100)
+  artifactId     Int      @map("artifact_id")
+  mainStatId     Int      @map("main_stat_id")
+  sub1StatNameId Int      @map("sub1_stat_name_id")
+  sub2StatNameId Int      @map("sub2_stat_name_id")
+  sub3StatNameId Int      @map("sub3_stat_name_id")
+  sub4StatNameId Int      @map("sub4_stat_name_id")
+  sub1Number     Decimal  @map("sub1_number") @db.Decimal(9, 4)
+  sub2Number     Decimal  @map("sub2_number") @db.Decimal(9, 4)
+  sub3Number     Decimal  @map("sub3_number") @db.Decimal(9, 4)
+  sub4Number     Decimal  @map("sub4_number") @db.Decimal(9, 4)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("artifact_managers")
 }

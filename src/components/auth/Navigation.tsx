@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { User } from "@prisma/client"
-import UserNavigation from "@/components/auth/UserNavigation"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import { User } from "@prisma/client";
+import UserNavigation from "@/components/auth/UserNavigation";
+import Link from "next/link";
 
 interface NavigationProps {
-  user: User | null
+  user: User | null;
 }
 
 // ナビゲーション
@@ -32,7 +32,7 @@ const Navigation = ({ user }: NavigationProps) => {
         )}
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Navigation
+export default Navigation;

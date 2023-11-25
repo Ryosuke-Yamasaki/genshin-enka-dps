@@ -1,9 +1,9 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import { getServerSession, type NextAuthOptions } from "next-auth"
-import prisma from "@/lib/prosma"
-import GoogleProvider from "next-auth/providers/google"
-import CredentialsProvider from "next-auth/providers/credentials"
-import bcrypt from "bcrypt"
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { getServerSession, type NextAuthOptions } from "next-auth";
+import prisma from "@/lib/prosma";
+import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
 
 // NextAuth設定
 export const authOptions: NextAuthOptions = {
@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         // メールアドレスとパスワードがない場合はエラー
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("メールアドレスとパスワードが存在しません")
+          throw new Error("メールアドレスとパスワードが存在しません");
         }
 
         // ユーザーを取得
@@ -36,24 +36,24 @@ export const authOptions: NextAuthOptions = {
           where: {
             email: credentials.email,
           },
-        })
+        });
 
         // ユーザーが存在しない場合はエラー
         if (!user || !user?.hashedPassword) {
-          throw new Error("ユーザーが存在しません")
+          throw new Error("ユーザーが存在しません");
         }
 
         // パスワードが一致しない場合はエラー
         const isCorrectPassword = await bcrypt.compare(
           credentials.password,
           user.hashedPassword
-        )
+        );
 
         if (!isCorrectPassword) {
-          throw new Error("パスワードが一致しません")
+          throw new Error("パスワードが一致しません");
         }
 
-        return user
+        return user;
       },
     }),
   ],
@@ -61,14 +61,14 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-}
+};
 
 // 認証情報取得
 export const getAuthSession = async () => {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
   if (!session || !session.user?.email) {
-    return null
+    return null;
   }
 
   // 1件のレコードを取得、見つからない場合は例外を投げる
@@ -76,7 +76,7 @@ export const getAuthSession = async () => {
     where: {
       email: session.user.email,
     },
-  })
+  });
 
-  return user
-}
+  return user;
+};
